@@ -1,0 +1,55 @@
+List of relations
+Schema |   Name    | Type  |    Owner
+--------+-----------+-------+-------------
+public | actors    | table | michaelpark
+public | albums    | table | michaelpark
+public | castings  | table | michaelpark
+public | countries | table | michaelpark
+public | depts     | table | michaelpark
+public | movies    | table | michaelpark
+public | nobels    | table | michaelpark
+public | routes    | table | michaelpark
+public | stops     | table | michaelpark
+public | styles    | table | michaelpark
+public | teachers  | table | michaelpark
+public | tracks    | table | michaelpark
+(12 rows)
+
+
+Table "public.tracks"
+Column |          Type          | Modifiers
+--------+------------------------+-----------
+album  | character(10)          | not null
+disk   | integer                | not null
+posn   | integer                | not null
+song   | character varying(255) |
+Indexes:
+"tracks_pkey" PRIMARY KEY, btree (album, disk, posn)
+Foreign-key constraints:
+"tracks_album_fkey" FOREIGN KEY (album) REFERENCES albums(asin)
+
+Table "public.albums"
+Column |         Type          | Modifiers
+--------+-----------------------+-----------
+asin   | character(10)         | not null
+title  | character varying(50) |
+artist | character varying(50) |
+price  | numeric(10,2)         |
+rdate  | date                  |
+label  | character varying(50) |
+rank   | integer               |
+Indexes:
+"albums_pkey" PRIMARY KEY, btree (asin)
+Referenced by:
+TABLE "styles" CONSTRAINT "styles_album_fkey" FOREIGN KEY (album) REFERENCES albums(asin)
+TABLE "tracks" CONSTRAINT "tracks_album_fkey" FOREIGN KEY (album) REFERENCES albums(asin)
+
+Table "public.styles"
+Column |          Type          | Modifiers
+--------+------------------------+-----------
+album  | character(10)          | not null
+style  | character varying(100) | not null
+Indexes:
+"styles_pkey" PRIMARY KEY, btree (album, style)
+Foreign-key constraints:
+"styles_album_fkey" FOREIGN KEY (album) REFERENCES albums(asin)
